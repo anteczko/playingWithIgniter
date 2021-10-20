@@ -1,7 +1,5 @@
-<h1>Welcome to login page!</h1>
-<?php
-    echo view('templates/loginHeader');
-?>
+<h1>Welcome to advert adding page!</h1>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,15 +12,22 @@
     </style>
 </head>
 <body>
+    <?php
+        echo view('templates/loginHeader');
+    ?>
     <div class="wrapper">
-        <form action="/olx/users/login" method="post">
+        <form action="/olx/adverts/add" method="post">
             <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control">
             </div>    
             <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control">
+                <label>Description</label>
+                <textarea name="description" class="form-control"> </textarea>
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" name="price" step="0.01" min="0.01">
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">

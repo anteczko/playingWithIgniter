@@ -38,13 +38,21 @@ $routes->get('news/(:segment)', 'News::view/$1');
 $routes->get('news', 'News::index');
 $routes->get('session/(:segment)','Session::$1');
 
-$routes->get('users/(:segment)', 'Users::view/$1');
-$routes->get('users', 'Users::index');
+//$routes->get('users/(:segment)', 'Users::view/$1');
+//$routes->get('users', 'Users::index');
 
 $routes->get('olx', 'OlxWebsiteController::index');
 $routes->get('olx/users', 'OlxUsersController::index');
+$routes->get('olx/users/register', 'OlxUsersController::register');
+$routes->get('olx/users/login', 'OlxUsersController::login');
 $routes->get('olx/adverts', 'OlxAdvertsController::index');
+$routes->get('olx/adverts/add', 'OlxAdvertsController::add');
+$routes->get('olx/testing', 'OlxUsersController::testing');
+$routes->match(['get','post'],'olx/adverts/add','OlxAdvertsController::actionAdd');
 $routes->match(['get','post'],'olx/users/create','OlxUsersController::create');
+$routes->match(['get','post'],'olx/users/login','OlxUsersController::loginUser');
+$routes->get('olx/users/logout', 'OlxUsersController::logout');
+$routes->match(['get','post'],'olx/adverts/search', 'OlxAdvertsController::displaySearchedAdverts');
 
 $routes->get('(:any)', 'Pages::view/$1');
 

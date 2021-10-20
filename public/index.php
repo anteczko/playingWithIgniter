@@ -34,6 +34,5 @@ $app       = require realpath($bootstrap) ?: $bootstrap;
  * Now that everything is setup, it's time to actually fire
  * up the engines and make this app do its thang.
  */
-//if(rand(28,37) == 30) die("HTTP ERROR 2137");
-if(rand(28, 37) == 30) throw new Exception("HTTP ERROR 2137: Zjedz kremuwe");
+
 $app->run();

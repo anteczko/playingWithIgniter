@@ -12,5 +12,9 @@ class AdvertModel extends Model
     {
         return $this->findAll();
     }
+    public function getSearchedAdverts(){
+        $builder=$this->table('adverts');
+
+    }
     
 }

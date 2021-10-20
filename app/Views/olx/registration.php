@@ -1,7 +1,5 @@
 <h1>Welcome to login page!</h1>
-<?php
-    echo view('templates/loginHeader');
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +13,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="/olx/users/login" method="post">
+        <form action="/olx/users/create" method="post">
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" name="username" class="form-control">
@@ -25,9 +23,14 @@
                 <input type="password" name="password" class="form-control">
             </div>
             <div class="form-group">
+                <label>Repeat Password</label>
+                <input type="password" name="repeatPassword" class="form-control">
+            </div>
+            <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <input type="reset" class="btn btn-secondary ml-2" value="Reset">
             </div>
+            <p>Already have an account? <a href="login.php">Login here</a>.</p>
         </form>
     </div>    
 </body>

@@ -1,1 +1,1 @@
-<h1>Error user by that name specified</h1>
+<h1>Error user by that name is already specified</h1>
