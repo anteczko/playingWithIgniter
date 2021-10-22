@@ -15,6 +15,10 @@ class AdvertModel extends Model
     public function getSearchedAdverts(){
         $builder=$this->table('adverts');
 
+        $res=$builder->get()->getRowsArray();
+        d($res);
+
+        return $res;
     }
     
 }

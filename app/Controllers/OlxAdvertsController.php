@@ -27,11 +27,15 @@ class OlxAdvertsController extends BaseController
             echo "<h1>Witamy na olixie!</h1>";
             echo view('olx/searchHeader');
             $model=new AdvertModel();
-            $builder=$this->table('adverts');
-            $data=$builder->like('title',$this->request->getPost('title'))->get();
-            //$data=[ 'adverts' => $model->getAll(), ];
+            //$builder=$this->table('adverts');
+            //$data=$builder->like('title',$this->request->getPost('title'))->get();
+            $data=[ 'adverts' => $model->getAll() ];
+            d($data);
+            $data=[ 'adverts' => $model->getSearchedAdverts() ];
+            d($data);
+            //$data=$model->getSearchedAdverts();
 
-        echo view('olx/advertOverview',$data);
+            echo view('olx/advertOverview',$data);
         }else{
             $this->displayAll();
         }
