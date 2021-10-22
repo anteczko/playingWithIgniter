@@ -3,6 +3,8 @@
 namespace App\Controllers;
 #TODO import adverts model!!!!
 use App\Models\AdvertModel;
+use App\Models\CategoryModel;
+use App\Models\UserModel;
 use CodeIgniter\Controller;
 
 class OlxAdvertsController extends BaseController
@@ -12,8 +14,21 @@ class OlxAdvertsController extends BaseController
         $this->displayAll();
     }
     public function displayAll(){
-        echo "<h1>Witamy na olixie!</h1>";
-        echo view('olx/searchHeader');
+        $session = \Config\Services::session();
+
+        $user=new UserModel();
+        $sessionData=[
+            'nick'=>$user->getSession()->get('nick'),
+        ];
+        d($sessionData);
+        echo view('olx/navigationPanel',$sessionData);
+        echo view('BootstrapView');
+        $catModel=new CategoryModel();
+
+        $headerData=[
+            'categories'=>$catModel->getCategories(),
+        ];
+        echo view('olx/searchHeader',$headerData);
         $model=new AdvertModel();
         $data=[
             'adverts' => $model->getAll(),
@@ -21,29 +36,45 @@ class OlxAdvertsController extends BaseController
         echo view('olx/advertOverview',$data);
     }
     public function displaySearchedAdverts(){
-        if($this->request->getMethod() === 'post'){
-            d("We gotta make some queries");
+        $user=new UserModel();
+        $sessionData=[
+            $user->getSession(),
+        ];
 
-            echo "<h1>Witamy na olixie!</h1>";
-            echo view('olx/searchHeader');
+        echo view('olx/navigationPanel',$sessionData);
+        echo view('BootstrapView');
+        if($this->request->getMethod() === 'post'){
+
+            $catModel=new CategoryModel();
+
+            $headerData=[
+                'categories'=>$catModel->getCategories(),
+            ];
+            echo view('olx/searchHeader',$headerData);
             $model=new AdvertModel();
             //$builder=$this->table('adverts');
             //$data=$builder->like('title',$this->request->getPost('title'))->get();
-            $data=[ 'adverts' => $model->getAll() ];
-            d($data);
-            $data=[ 'adverts' => $model->getSearchedAdverts() ];
-            d($data);
+            //$data=[ 'adverts' => $model->getAll() ];
+            //d($data);
+            $data=[ 'adverts' => $model->getSearchedAdverts(
+                $this->request->getPost('title'),
+                $this->request->getPost('price'),
+                $this->request->getPost('sorting')
+            ) ];
             //$data=$model->getSearchedAdverts();
 
             echo view('olx/advertOverview',$data);
+
         }else{
             $this->displayAll();
         }
     }
     public function add(){
+        echo view('BootstrapView');
         echo view('olx/addAdvert');
     }
     public function actionAdd(){
+        echo view('BootstrapView');
         $model=new AdvertModel();
         echo view('templates/loginHeader');
 

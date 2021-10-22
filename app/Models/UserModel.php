@@ -42,11 +42,16 @@ class UserModel extends Model
 		}
 		return false;
 	}
-	public function getSession($nick)
+	public function getSession()
 	{
 		$session = \Config\Services::session();
-		$session->set('nick',$nick);
+		return $session;
 	}
+    public function setSession($nick)
+    {
+        $session = \Config\Services::session();
+        $session->set('nick',$nick);
+    }
 	public function deleteSession()
 	{
 		$session = \Config\Services::session();

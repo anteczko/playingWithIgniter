@@ -15,19 +15,31 @@ class OlxUsersController extends BaseController
 
         echo view('olx/login');
     }
+
+    public function getSession(){
+        $session = \Config\Services::session();
+
+        return $session;
+    }
+
+
+
     public function register()
     {
         echo view('olx/registration');
     }
+
     public function login()
     {
         echo view('olx/login');
     }
+
     public function logout(){
         $model=new UserModel();
         $model->deleteSession();
         return redirect()->to('/olx/users');
     }
+
     public function create()
     {
         $model=new UserModel();
@@ -48,6 +60,7 @@ class OlxUsersController extends BaseController
             }
         }
     }
+
     public function loginUser()
     {
         $model=new UserModel();
@@ -59,7 +72,7 @@ class OlxUsersController extends BaseController
                 if($model->validateCridentials($this->request->getPost('username'),$this->request->getPost('password')))
                 {
                     echo view('users/loginUserSuccess');
-                    $model->getSession($this->request->getPost('username'));
+                    $model->setSession($this->request->getPost('username'));
                     
                     $session = \Config\Services::session();
                 }
@@ -70,6 +83,7 @@ class OlxUsersController extends BaseController
         
         }
     }
+
     public function testing()
     {
         $model=new UserModel();

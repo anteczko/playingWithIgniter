@@ -12,12 +12,13 @@ class AdvertModel extends Model
     {
         return $this->findAll();
     }
-    public function getSearchedAdverts(){
+    public function getSearchedAdverts($title,$price,$sorting){
         $builder=$this->table('adverts');
-
-        $res=$builder->get()->getRowsArray();
-        d($res);
-
+        $builder->like('title',$title);
+        $builder->where('price <=',$price);
+        if($price) $builder->orderBy('price','DESC');
+        else $builder->orderBy('price','ASC');
+        $res=$builder->get()->getResultArray();
         return $res;
     }
     

@@ -1,12 +1,19 @@
-<?php
-echo "<h1>There will be list of all adverts</h1>";
-//delete this vardump
-//var_dump($adverts);
-d($adverts);
-if(! empty($adverts)){
-    foreach($adverts as $row){
-        //d($row);
-        echo view('olx/advertView',$row);
-    }
-}
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div class="container">
+        <div class="row row-cols-auto">
+            <?php
+                if(! empty($adverts)){
+                    foreach($adverts as $row){
+                        echo "<div class='col'>";
+                        echo view('olx/advertView',$row);
+                        echo "</div>";
+                    }
+                }
+                ?>
+        </div>
+    </div>
+</body>
+</html>
 
