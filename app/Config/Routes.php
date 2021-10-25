@@ -42,7 +42,7 @@ $routes->get('session/(:segment)','Session::$1');
 //$routes->get('users', 'Users::index');
 
 $routes->get('olx', 'OlxWebsiteController::index');
-$routes->get('olx/users', 'OlxUsersController::index');
+$routes->get('olx/users', 'OlxUsersController::login');
 $routes->get('olx/users/register', 'OlxUsersController::register');
 $routes->get('olx/users/login', 'OlxUsersController::login');
 $routes->get('olx/adverts', 'OlxAdvertsController::index');
@@ -52,7 +52,9 @@ $routes->match(['get','post'],'olx/adverts/add','OlxAdvertsController::actionAdd
 $routes->match(['get','post'],'olx/users/create','OlxUsersController::create');
 $routes->match(['get','post'],'olx/users/login','OlxUsersController::loginUser');
 $routes->get('olx/users/logout', 'OlxUsersController::logout');
-$routes->match(['get','post'],'olx/adverts/search', 'OlxAdvertsController::displaySearchedAdverts');
+$routes->match(['get','post'],'olx/adverts/search', 'OlxAdvertsController::displayAdverts');
+$routes->get('olx/adverts/(:segment)', 'OlxAdvertsController::fullAdvertView/$1');
+
 
 $routes->get('(:any)', 'Pages::view/$1');
 

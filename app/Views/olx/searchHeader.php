@@ -26,8 +26,13 @@
                 </select>
             </div>
             <div class="col">
-                sortuj według ceny malejąco
-                <input type="radio" name="sorting">
+
+                <label for="sorting">Sortuj według:</label>
+                <select name="sorting">
+                    <option value="0">Najtańsze</option>
+                    <option value="1">Najdroższe</option>
+                </select>
+
             </div>
         </form>
     </div>

@@ -6,29 +6,37 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="<?= base_url("/olx") ?>">Strona główna <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="<?= base_url("/olx/adverts") ?>">Strona główna <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url("/olx/adverts") ?>">Ogłoszenia</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url("/olx/adverts/add") ?>">Dodaj Ogłoszenie</a>
+            </li>
 
         </ul>
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
                 <?php
                 if(! empty($nick)){
-                    echo "Hello ".$nick;
+                    echo '<span class="navbar-brand mb-0 h1">Witaj '.$nick.'</span>';
+                }else {
+                    echo '<a class="nav-link" href="'.base_url("/olx/users/login").'">Zaloguj się</a>';
                 }
                 ?>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url("/olx/users/login") ?>">Zaloguj się</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url("/olx/users/register") ?>">Zarejestruj się</a>
+                <?php
+                if(! empty($nick)){
+                    echo '<a class="nav-link" href="'.base_url("/olx/users/logout").'">Wyloguj się</a>';
+                }else {
+                    echo '<a class="nav-link" href="'.base_url("/olx/users/register").'">Zarejestruj się</a>';
+                }
+                ?>
             </li>
-        </ul>
 
+        </ul>
 
         </div>
     </div>

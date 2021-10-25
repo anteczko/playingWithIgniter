@@ -30,6 +30,20 @@
                 <input type="number" name="price" step="0.01" min="0.01">
             </div>
             <div class="form-group">
+                <label for="category">Wybierz kategorię:</label>
+
+                <select name="category" id="category">
+                    <?php
+                    if(! empty($categories)) {
+                        foreach ($categories as $row) {
+                            //echo '<li><a class="dropdown-item" ="'.$row['id'].'"> '.$row['name'].'</option></li>';
+                            echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <input type="reset" class="btn btn-secondary ml-2" value="Reset">
             </div>

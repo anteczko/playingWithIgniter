@@ -3,6 +3,7 @@
 namespace App\Controllers;
 #TODO import adverts model!!!!
 use App\Models\UserModel;
+use App\Controllers\OlxAdvertsController;
 use CodeIgniter\Controller;
 
 
@@ -22,22 +23,29 @@ class OlxUsersController extends BaseController
         return $session;
     }
 
-
-
     public function register()
     {
+        $sessionData=[
+            'nick'=> $this->getSession()->get('nick'),
+        ];
+        echo view('olx/navigationPanel',$sessionData);
+
         echo view('olx/registration');
     }
 
     public function login()
     {
+        $sessionData=[
+            'nick'=> $this->getSession()->get('nick'),
+        ];
+        echo view('olx/navigationPanel',$sessionData);
+
         echo view('olx/login');
     }
 
     public function logout(){
-        $model=new UserModel();
-        $model->deleteSession();
-        return redirect()->to('/olx/users');
+        $this->getSession()->destroy();
+        return redirect()->to('/olx');
     }
 
     public function create()
@@ -71,10 +79,12 @@ class OlxUsersController extends BaseController
             {
                 if($model->validateCridentials($this->request->getPost('username'),$this->request->getPost('password')))
                 {
+                    $session = \Config\Services::session();
+
                     echo view('users/loginUserSuccess');
                     $model->setSession($this->request->getPost('username'));
-                    
-                    $session = \Config\Services::session();
+
+                    return redirect()->to('/olx/adverts');
                 }
             }else
             {
@@ -82,6 +92,7 @@ class OlxUsersController extends BaseController
             }
         
         }
+        return $model;
     }
 
     public function testing()
