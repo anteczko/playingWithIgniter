@@ -16,13 +16,26 @@ g id
 g owner_id
 * title
 * description
+* original_price (decimal)
+* original_currency (enum)
 * price (decimal)
 * priority
 g creation_timestamp
 g sold_timestamp
+* picture_name
 -categories
 g id
 * name
+-currencies
+* id
+* 'symbol' (PLN/JPN,USD)
+* name
+-pictures
+g id
+g advert_id
+g name
+
+Models:
 
 Subsites:
 -main site/ list of adverts
@@ -35,7 +48,7 @@ Subsites:
 -admin/mod pages?
  -
 
-Routes:
+Routing:
 / main website
 /users/ admin only, displays list of users
 /users/register registration form
@@ -48,4 +61,57 @@ Routes:
 /adverts/show/<id> shows enitre page of certain advert
 
 Site elements:
--
+-Navbar
+ -has links to main subsites
+  -main site
+  -dodaj ogłoszenie button
+  -log in
+ -field login/signup changes with Hello <user> dependent on session
+-SearchBar
+ -title search
+ -categories (multiple)
+ -price range
+ -showing order (ASC/DESC)
+ -maybe city/county?
+-login form
+ -username/email adress
+ -password
+ -submit button
+-register form
+ -username
+ -email adress
+ -password
+ -repeat password
+ -phone number
+ -submit button
+-advert form 
+ -title
+ -description
+ -price (decimal)
+ -category
+-errors pages
+ -add argument handling so you can add custom error title and desciption
+
+Website sub elements:
+ -header (bootstrap imports etc.)
+ -site body
+ -single advert card
+ -full advert card view
+ -footer
+
+Controllers:
+-websitesController
+-usersController
+-advertsController
+
+Helpers?:
+-function that yeets session?
+-function that helps to display navbar, returns session data?
+-funciton that return list of categorires or smth
+
+
+TODO:
+-add protection against sql injection etc.
+-add code for logging in in userController
+-add SSL for safe sending password!!!
+-add password hashing etc.
