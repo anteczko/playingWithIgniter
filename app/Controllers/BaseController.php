@@ -47,8 +47,6 @@ class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
 
-        //$session = \Config\Services::session();
-        //$this->session = \Config\Services::session();
-	
+        // E.g.: $this->session = \Config\Services::session();
     }
 }

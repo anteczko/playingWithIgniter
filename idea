@@ -1,0 +1,51 @@
+File for writing an plannign project:
+
+Tables and databases:
+-users
+g id (randomly generated)
+* username
+* password (hashed I guess)
+* email
+g role (enum I guess)
+ -admin
+ -moderator
+ -user
+o phone_number (potional)
+-adverts
+g id
+g owner_id
+* title
+* description
+* price (decimal)
+* priority
+g creation_timestamp
+g sold_timestamp
+-categories
+g id
+* name
+
+Subsites:
+-main site/ list of adverts
+-users
+ -register
+ -login
+-adverts
+ -add
+ -search (this is same site that displays all)
+-admin/mod pages?
+ -
+
+Routes:
+/ main website
+/users/ admin only, displays list of users
+/users/register registration form
+/users/login login form
+
+/adverts/ list of all adverts
+	supports POST, in that case it will use data to filter and sort adverts, but on very same site
+/adverts/add for to add advert
+/adverts/edit/<number> edit page for user or moderator/admin
+/adverts/show/<id> shows enitre page of certain advert
+
+Site elements:
+-

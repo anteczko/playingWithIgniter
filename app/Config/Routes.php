@@ -31,32 +31,7 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-#$routes->get('/', 'Home::index');
-#$routes->get('(:any)','Pages::view/$1');
-$routes->match(['get','post'],'news/create', 'News::create');
-$routes->get('news/(:segment)', 'News::view/$1');
-$routes->get('news', 'News::index');
-$routes->get('session/(:segment)','Session::$1');
-
-//$routes->get('users/(:segment)', 'Users::view/$1');
-//$routes->get('users', 'Users::index');
-
-$routes->get('olx', 'OlxWebsiteController::index');
-$routes->get('olx/users', 'OlxUsersController::login');
-$routes->get('olx/users/register', 'OlxUsersController::register');
-$routes->get('olx/users/login', 'OlxUsersController::login');
-$routes->get('olx/adverts', 'OlxAdvertsController::index');
-$routes->get('olx/adverts/add', 'OlxAdvertsController::add');
-$routes->get('olx/testing', 'OlxUsersController::testing');
-$routes->match(['get','post'],'olx/adverts/add','OlxAdvertsController::actionAdd');
-$routes->match(['get','post'],'olx/users/create','OlxUsersController::create');
-$routes->match(['get','post'],'olx/users/login','OlxUsersController::loginUser');
-$routes->get('olx/users/logout', 'OlxUsersController::logout');
-$routes->match(['get','post'],'olx/adverts/search', 'OlxAdvertsController::displayAdverts');
-$routes->get('olx/adverts/(:segment)', 'OlxAdvertsController::fullAdvertView/$1');
-
-
-$routes->get('(:any)', 'Pages::view/$1');
+$routes->get('/', 'Home::index');
 
 /*
  * --------------------------------------------------------------------

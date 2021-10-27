@@ -1,1 +1,0 @@
-<h1>Error! User with that name doesn't exist!!!!</h1>

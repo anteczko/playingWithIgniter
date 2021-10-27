@@ -1,1 +1,0 @@
-<h1>Error user by that name is already specified</h1>
