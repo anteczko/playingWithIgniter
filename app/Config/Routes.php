@@ -36,10 +36,16 @@ $routes->get('/', 'Home::index');
 $routes->get('/users/','UserController::index');
 $routes->get('/users/register','UserController::register');
 $routes->get('/users/login','UserController::login');
+$routes->get('/users/logout','UserController::logout');
+$routes->match(['post','get'],'/users/loginAction','UserController::loginAction');
 $routes->match(['post','get'],'/users/registerAction','UserController::registerAction');
 
 $routes->get('/adverts/','AdvertController::index');
-$routes->match(['post','get'],'/users/loginAction','UserController::loginAction');
+$routes->get('/adverts/add','AdvertController::add');
+$routes->get('/adverts/search','AdvertController::search');
+$routes->match(['post','get'],'/adverts/addAction','AdvertController::addAction');
+$routes->match(['post','get'],'/adverts/searchAction','AdvertController::searchAction');
+
 
 
 /*

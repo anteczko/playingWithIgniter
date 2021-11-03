@@ -63,7 +63,9 @@ Routing:
 Site elements:
 -Navbar
  -has links to main subsites
+  -website logo
   -main site
+  -search
   -dodaj ogłoszenie button
   -log in
  -field login/signup changes with Hello <user> dependent on session
@@ -111,7 +113,25 @@ Helpers?:
 
 
 TODO:
--add protection against sql injection etc.
--add code for logging in in userController
--add SSL for safe sending password!!!
--add password hashing etc.
+-make nice page to display all adverts in grid
+-adding images to advert
+-better site navigation
+-website body
+ -add maybe banner?
+ -footer
+[x]keep search fields between reloads
+-add file upload
+[x]better search
+
+DONE:
+[x]make single advert card
+[x]make user log in
+[x]make session
+[x]make logout
+[x]make navbar session checking
+----old
+[x]end making loggin with email or username
+[x]add code for logging in in userController
+[x]add password hashing etc.
+[x]add protection against sql injection etc.
+ [x]login and register sanitized laready, mainly
