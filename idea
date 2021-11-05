@@ -111,25 +111,31 @@ Helpers?:
 -function that helps to display navbar, returns session data?
 -funciton that return list of categorires or smth
 
-
 TODO:
+[x]page to display single advert and info about owner
+[x]display advert's images
 -make nice page to display all adverts in grid
--adding images to advert
 -better site navigation
 -website body
  -add maybe banner?
  -footer
-[x]keep search fields between reloads
--add file upload
-[x]better search
 
 DONE:
+[x]adding images to advert
+[x]add file upload
+ [x]file validation
+  [x]name
+  [x]mimetype
+[x]saving file into sevret
+[x]adding file to database
+----old
 [x]make single advert card
 [x]make user log in
 [x]make session
 [x]make logout
 [x]make navbar session checking
-----old
+[x]keep search fields between reloads
+[x]better search
 [x]end making loggin with email or username
 [x]add code for logging in in userController
 [x]add password hashing etc.

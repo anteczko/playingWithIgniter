@@ -33,8 +33,12 @@
                         </select>
                     </div>
                     <div class="md-6">
-                        <label for="files" class="form-label">Add files</label>
-                        <input type="file" name="file" class="form-control" aria-label="Upload">
+                        <label for="picture" class="form-label">Add files</label>
+                        <input type="file" name="picture" class="form-control" aria-label="Upload">
+                    </div>
+                    <div class="md-6">
+                        <label for="isPromoted" class="form-label">Is promoted</label>
+                        <input type="checkbox" name="isPromoted" aria-label="Upload">
                     </div>
                     <div class="md-6">
                         <button type="submit" class="btn btn-primary">Submit</button>

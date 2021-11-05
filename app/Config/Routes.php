@@ -43,6 +43,7 @@ $routes->match(['post','get'],'/users/registerAction','UserController::registerA
 $routes->get('/adverts/','AdvertController::index');
 $routes->get('/adverts/add','AdvertController::add');
 $routes->get('/adverts/search','AdvertController::search');
+$routes->get('/adverts/(:any)','AdvertController::showSingleAdvert/$1');
 $routes->match(['post','get'],'/adverts/addAction','AdvertController::addAction');
 $routes->match(['post','get'],'/adverts/searchAction','AdvertController::searchAction');
 

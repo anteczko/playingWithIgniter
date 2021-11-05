@@ -5,7 +5,7 @@ use CodeIgniter\Model;
 
 class AdvertModel extends Model{
     protected $table = 'adverts';
-    protected $allowedFields = ['id','owner_id','title','description','original_price','original_currency_id','price','creation_timestamp','sold_timestamp','category_id'];
+    protected $allowedFields = ['id','owner_id','title','description','original_price','original_currency_id','price','creation_timestamp','sold_timestamp','category_id','promoted_to'];
 
     public function getAll(){
         return $this->table('adverts')->get()->getResultArray();
@@ -39,6 +39,11 @@ class AdvertModel extends Model{
             $builder->orderBy('price','DESC');
 
         return $this->get()->getResultArray();
+    }
+
+    public function getAdvertById($id){
+        $builder=$this->table('adverts');
+        return $builder->where('id',$id)->get()->getRowArray();
     }
 
 
