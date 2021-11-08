@@ -1,8 +1,11 @@
 <?php
+use App\Models\CategoryModel;
     function displayNavBar()
     {
         echo view('templates/websiteHeaderView');
-        echo view('templates/navBar');
+        $categoriesModel=new CategoryModel();
+        $data=['categories'=>$categoriesModel->getAll()];
+        echo view('templates/navBar',$data);
     }
 
     function displaySearchBar()
