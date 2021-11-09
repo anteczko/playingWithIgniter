@@ -7,7 +7,7 @@
             </div>
                 <?php
                 foreach($errors as $key => $error){
-                    echo '<div class="card border-danger mb-3" style="max-width: 18rem;">';
+                    echo '<div class="card border-danger mb-3">';
                     if(empty($key))$key="Error";
                     echo '<div class="card-header bg-danger text-white">'.$key.'</div>';
                     echo '<div class="card-body text-danger">';

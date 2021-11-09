@@ -37,15 +37,22 @@ $routes->get('/users/','UserController::index');
 $routes->get('/users/register','UserController::register');
 $routes->get('/users/login','UserController::login');
 $routes->get('/users/logout','UserController::logout');
+#$routes->add('/users/loginAction','UserController::loginAction');
+#$routes->add('/users/registerAction','UserController::registerAction');
 $routes->match(['post','get'],'/users/loginAction','UserController::loginAction');
 $routes->match(['post','get'],'/users/registerAction','UserController::registerAction');
 
 $routes->get('/adverts/','AdvertController::index');
 $routes->get('/adverts/add','AdvertController::add');
 $routes->get('/adverts/search','AdvertController::search');
+$routes->get('/adverts/category/(:any)','AdvertController::searchCategory/$1');
 $routes->get('/adverts/(:any)','AdvertController::showSingleAdvert/$1');
+
 $routes->match(['post','get'],'/adverts/addAction','AdvertController::addAction');
 $routes->match(['post','get'],'/adverts/searchAction','AdvertController::searchAction');
+
+$routes->get('/categories/','CategoryController::index');
+$routes->get('/website/modal/(:any)','WebsiteController::modal/$1');
 
 
 

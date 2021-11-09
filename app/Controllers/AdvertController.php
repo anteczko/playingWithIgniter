@@ -2,28 +2,54 @@
 namespace App\Controllers;
 
 use App\Models\AdvertModel;
+use App\Models\CategoryModel;
 use App\Models\PictureModel;
+use App\Models\UserModel;
 use CodeIgniter\Controller;
 
 class AdvertController extends Controller
 {
     public function index()
     {
-        $this->search();
+        helper('display_website_element');
+        helper('display_error_helper');
+        displayNavBar();
+        displaySearchBar();
+
+        $session = \Config\Services::session();
+        $errors=$session->getFlashdata('errors');
+        $errorMessage=$session->getFlashdata('errorMessage');
+        if(! empty($errors)){
+            //displayValidatorErrorsInModal($errors);
+            modalShow("loginModal");
+        }
+        else if(! empty($errorMessage)){
+            //displayErrorInModal($errorMessage);
+            modalShow("loginModal");
+        }
+
+        $categoryModel=new CategoryModel();
+        $data=['categories'=>$categoryModel->findAll()];
+        echo view('categories/categoriesBar',$data);
+        $this->displaySearch();
     }
 
     public function search($data=null){
-        helper('displayWebsiteElement');
+        helper('display_website_element');
+        displayNavBar();
+        displaySearchBar();
+
+
+        $this->displaySearch($data);
+    }
+
+    public function displaySearch($data=null){
         if(empty($data)){
             $model = new AdvertModel();
             $picture=new PictureModel();
             $data=['rows'=>$model->getAll(),
                 'picture'=>$picture->getAll()];
         }
-
-        echo view('templates/websiteHeaderView');
-        displayNavBar();
-        displaySearchBar();
         echo view('adverts/allAdvertsView',$data);
     }
 
@@ -32,36 +58,43 @@ class AdvertController extends Controller
      */
     public function showSingleAdvert($advertId){
         #TODO add error handling in case of undefined id specified
-        helper('displayWebsiteElement');
+        helper('display_website_element');
         displayNavBar();
-        $model = new AdvertModel();
+        $user = new UserModel();
+        $advert = new AdvertModel();
         $picture=new PictureModel();
 
-        $data=['row'=>$model->getAdvertById($advertId),
-                'picture'=>$picture->getPictureByAdvertId($advertId)];
+        $advertRow=$advert->getAdvertById($advertId);
+        $userRow=$user->getUserById($advertRow['owner_id']);
+
+        $data=['row'=>$advertRow,
+                'picture'=>$picture->getPictureByAdvertId($advertId),
+                'user'=>$userRow];
         //echo view("adverts/singleAdvertView",$data);
         echo view("adverts/fullSingleAdvertView",$data);
     }
 
     public function add()
     {
-        helper('displayError');
-        helper('displayWebsiteElement');
+        helper('display_error');
+        helper('display_website_element');
 
         if (!empty(getUsername())) {
             echo view('templates/websiteHeaderView');
             displayNavBar();
 
             echo view('templates/websiteHeaderView');
-            echo view('forms/addAdvertView');
+            $categoriesModel=new CategoryModel();
+            $data=['categories'=>$categoriesModel->getAll()];
+            echo view('forms/addAdvertView',$data);
         }else
             return redirect()->to(base_url("/users/login"));
     }
 
     public function addAction()
     {
-        helper('displayError');
-        helper('displayWebsiteElement');
+        helper('display_error');
+        helper('display_website_element');
         helper('form');
         helper('string');
         helper('date');
@@ -76,7 +109,7 @@ class AdvertController extends Controller
                     'title' => 'required|min_length[12]|max_length[64]',
                     'description' => 'required|min_length[16]|max_length[2048]',
                     'price' => 'required|decimal|greater_than_equal_to[0]|less_than[10000000000]',
-                    'category' => 'required',
+                    'category' => 'required|integer',
                     'picture' => 'max_size[picture,12000]|mime_in[picture,image/png,image/jpg,image/jpeg|ext_in[picture,jpg,png,jpeg]'
                     #TODO add 'files' validation maybe?
                 ])){
@@ -92,7 +125,7 @@ class AdvertController extends Controller
                     'owner_id' => getSession()->get('id'),
                     'description' => filter_var($this->request->getPost('description'),FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES),
                     'price' => $this->request->getPost('price'),
-                    'category' => $this->request->getPost('category'),
+                    'category_id' => $this->request->getPost('category'),
                     'promoted_to' => $promotedValue
                 ]);
                 #TODO add file into database etc
@@ -103,8 +136,9 @@ class AdvertController extends Controller
                 $name=$this->request->getFile('picture')->getRandomName();
                 //$name=$this->request->getFile('picture')->getFilename();
 
+                $advertId=$advert->db->insertID();
                 $picture->save([
-                    'advert_id' => $advert->db->insertID(),
+                    'advert_id' => $advertId,
                     'name' => $name
                 ]);
 
@@ -115,7 +149,7 @@ class AdvertController extends Controller
                 d("added file with name");
                 d($name);
                 d($this->request->getPost('isPromoted'));
-
+                return redirect()->to(base_url("/adverts/".$advertId));
             }else{
                 d($this->validator->getErrors());
                 displayValidatorErrors($this->validator->getErrors());
@@ -127,7 +161,7 @@ class AdvertController extends Controller
     }
 
     public function searchAction(){
-        helper('displayError');
+        helper('display_error');
         $validation =  \Config\Services::validation();
         //TODO validate and sanitize all fields
         if($this->request->getMethod() == 'post'  &&
@@ -152,6 +186,19 @@ class AdvertController extends Controller
             d($this->validator->getErrors());
             displayValidatorErrors($this->validator->getErrors());
         }
+    }
+
+    public function searchCategory($category){
+        $model = new AdvertModel();
+        $picture=new PictureModel();
+        $categoryModel = new CategoryModel();
+
+
+        $categoryId=$categoryModel->getCategoryIdByName($category);
+
+        $data=['rows'=>$model->getAdvertsByCategoryId($categoryId),'picture'=>$picture->getAll()];
+
+        $this->search($data);
     }
 
 

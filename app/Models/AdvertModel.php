@@ -21,7 +21,7 @@ class AdvertModel extends Model{
     /**
      *
      */
-    public function getSearchedAdvertsBy($title,$category,$price,$order){
+    public function getSearchedAdvertsBy($title,$category_id,$price,$order){
         //TODO finish this function
         $builder=$this->table('adverts');
 
@@ -30,8 +30,12 @@ class AdvertModel extends Model{
         if(! empty($price))
             $builder->where('price <=',$price);
 
-        if( !empty($category) && $category>=0 )
-            $builder->where('category',$category);
+
+        if($category_id!="default") {
+            $builder->where('category_id', $category_id);
+        }
+
+
 
         if($order=="asc")
             $builder->orderBy('price','ASC');
@@ -43,7 +47,12 @@ class AdvertModel extends Model{
 
     public function getAdvertById($id){
         $builder=$this->table('adverts');
-        return $builder->where('id',$id)->get()->getRowArray();
+        return $builder->where('id',$id)->get()->getFirstRow('array');
+    }
+
+    public function getAdvertsByCategoryId($id){
+        $builder=$this->table('adverts');
+        return $builder->where('category_id',$id)->get()->getResultArray();
     }
 
 

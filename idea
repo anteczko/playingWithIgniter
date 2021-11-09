@@ -112,15 +112,20 @@ Helpers?:
 -funciton that return list of categorires or smth
 
 TODO:
-[x]page to display single advert and info about owner
-[x]display advert's images
--make nice page to display all adverts in grid
--better site navigation
+-make nicer category bar
+-check if category field is porperly added to advert
 -website body
  -add maybe banner?
+  -use carousel as banner
  -footer
+-add element with all categories!!!
+-make nice page to display all adverts in grid
+-better site navigation
 
 DONE:
+----old
+[x]page to display single advert and info about owner
+[x]display advert's images
 [x]adding images to advert
 [x]add file upload
  [x]file validation
@@ -128,7 +133,6 @@ DONE:
   [x]mimetype
 [x]saving file into sevret
 [x]adding file to database
-----old
 [x]make single advert card
 [x]make user log in
 [x]make session

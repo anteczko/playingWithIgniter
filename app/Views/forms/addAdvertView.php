@@ -27,9 +27,13 @@
                         <label for="inputState" class="form-label">Category</label>
                         <select name="category" class="form-select">
                             <!-- #TODO add categories pulled from database-->
-                            <option selected>Choose a category</option>
-                            <option >Hobby</option>
-                            <option >Praca</option>
+                            <?php
+                                foreach($categories as $category)
+                                {
+                                    echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
+                                }
+
+                            ?>
                         </select>
                     </div>
                     <div class="md-6">

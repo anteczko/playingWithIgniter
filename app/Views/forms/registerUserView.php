@@ -5,7 +5,7 @@
             <div class="card-header">
                 <h5 class="card-title">Register new user</h5>
             </div>
-            <div class="card-body" style="width: 18rem;">
+            <div class="card-body">
                 <form action="\users\registerAction" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username:</label>

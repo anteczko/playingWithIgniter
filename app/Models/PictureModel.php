@@ -14,7 +14,7 @@ class PictureModel extends Model{
         $builder=$this->table('pictures');
 
         $builder->where('advert_id',$advertId);
-        return $builder->get()->getResultArray();
+        return $builder->get()->getFirstRow('array');
     }
 
 }

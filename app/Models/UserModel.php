@@ -27,6 +27,9 @@ class UserModel extends Model{
         }
         return null;
     }
+    public function getUserById($id){
+        return $this->table('users')->where('id',$id)->get()->getFirstRow('array');
+    }
 
     public function isValidEmail($email){
         $validation =  \Config\Services::validation();

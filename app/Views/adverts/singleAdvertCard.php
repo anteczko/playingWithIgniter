@@ -1,4 +1,5 @@
-<?= helper('displayWebsiteElement'); ?>
+<?= helper('displayWebsiteElement');?>
+
 <div class="card h-100">
     <!-- TODO add function to display image from database -->
     <img src="/uploads/images/<?= $picture['name'] ?>" class="card-img-bottom" alt="...">

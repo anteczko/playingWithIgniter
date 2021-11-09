@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        helper('displayWebsiteElement');
+        helper('display_website_element');
         displayNavBar();
         displaySearchBar();
         $model = new UserModel();
@@ -22,14 +22,14 @@ class UserController extends Controller
      */
     public function register()
     {
-        helper('displayWebsiteElement');
+        helper('display_website_element');
         displayNavBar();
         echo view('forms/registerUserView');
     }
 
     public function registerAction()
     {
-        helper('displayError');
+        helper('display_error');
         $model = new UserModel();
 
         if ($this->request->getMethod() == 'post' &&
@@ -40,7 +40,7 @@ class UserController extends Controller
                 'email' => 'required|valid_email',
                 'phoneNumber' => 'permit_empty|integer'
             ])) {
-            $model->save([
+            $inserted=$model->save([
                 'username' => esc($this->request->getPost('username')),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT, ['cost' => 12]),
                 //'email' => esc($this->request->getPost('email')),
@@ -48,19 +48,24 @@ class UserController extends Controller
                 'phone_number' => $this->request->getPost('phoneNumber'),
             ]);
             #TODO add success redirect
-            d("User registered secussfully!!!!");
-            d($model->getUserData());
+            //d("User registered secussfully!!!!");
+            //d($model->getUserData());
+            $id=$model->db->insertID();
+            $this->setSession($id,esc($this->request->getPost('username')));
+            return redirect()->to(base_url("/adverts"));
         } else {
             #TODO add error of nusuccessfull login
-            d("error!");
-            d($this->validator->getErrors());
-            displayValidatorErrors($this->validator->getErrors());
+            //d("error!");
+            //d($this->validator->getErrors());
+            $session = \Config\Services::session();
+            $session->setFlashdata('errors',$this->validator->getErrors());
+            return redirect()->to(base_url("/adverts"));
         }
     }
 
     public function login()
     {
-        helper('displayWebsiteElement');
+        helper('display_website_element');
         displayNavBar();
         //TODO add a code to log in
         echo view('forms/loginUserView');
@@ -73,9 +78,10 @@ class UserController extends Controller
      */
     public function loginAction()
     {
-        helper('displayError');
+        helper('display_error');
         $model = new UserModel();
 
+        $errorMessage="";
         if ($this->request->getMethod() === 'post') {
             $validation = \Config\Services::validation();
             $usernameOrEmail = filter_var($this->request->getPost('username'), FILTER_SANITIZE_EMAIL);
@@ -90,11 +96,20 @@ class UserController extends Controller
                         helper('url');
                         return redirect()->to(base_url('/adverts'));
                     } else {
-                        displayError("Password specified is not correct");
+                        //displayError("Password specified is not correct");
+                        $errorMessage="Password specified is not correct";
                     }
+                }else{
+                    $errorMessage="User by that name doesn't exist";
                 }
             } else {
-               displayError("user by that username nor email doesn't exist");
+                $errorMessage="User by that username nor email doesn't exist";
+            }
+
+            if(! empty($errorMessage)){
+                $session = \Config\Services::session();
+                $session->setFlashdata('errorMessage',$errorMessage);
+                return redirect()->to(base_url("/adverts"));
             }
         }
     }

@@ -23,11 +23,16 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="categories">Category</label>
                                 </div>
-                                <select class="custom-select form-control" name="categories">
-                                    <option value="-1" <?php echo set_select('categories','-1',TRUE); ?> >Category</option>
-                                    <option value="1" <?php echo set_select('categories','1'); ?>>Hobby</option>
-                                    <option value="2" <?php echo set_select('categories','2'); ?>>Work</option>
-                                    <option value="3" <?php echo set_select('categories','3'); ?>>Three</option>
+                                <select class="custom-select form-control" name="category">
+                                    <option value="default" <?php echo set_select('category','default',TRUE); ?> >Category</option>
+                                    <?php
+                                    foreach($categories as $category)
+                                    {
+                                        $id=$category['id'];
+                                        $name=$category['name'];
+                                        echo '<option value="'. $id .'"'. set_select( 'category', $id ) .' >'. $category['name'] .'</option>';
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -37,8 +42,8 @@
                         </div>
                         <div class="col-2">
                             <select class="form-control" name="order" id="order">
-                                <option value="desc" <?php echo set_select('order','desc',TRUE); ?> >Desc</option>
-                                <option value="asc" <?php echo set_select('order','asc'); ?> >Asc</option>
+                                <option value="desc" <?php echo set_select('order','desc',TRUE); ?> >Descending</option>
+                                <option value="asc" <?php echo set_select('order','asc'); ?> >Ascending</option>
                             </select>
                         </div>
                     </div>
