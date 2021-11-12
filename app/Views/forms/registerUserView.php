@@ -1,3 +1,7 @@
+<?php
+    helper('form');
+    $session = \Config\Services::session();
+?>
 <body>
 <div class="row">
     <div class="col">

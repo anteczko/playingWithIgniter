@@ -21,7 +21,7 @@ class AdvertController extends Controller
         $errorMessage=$session->getFlashdata('errorMessage');
         if(! empty($errors)){
             //displayValidatorErrorsInModal($errors);
-            modalShow("loginModal");
+            modalShow("registerModal");
         }
         else if(! empty($errorMessage)){
             //displayErrorInModal($errorMessage);
@@ -38,7 +38,6 @@ class AdvertController extends Controller
         helper('display_website_element');
         displayNavBar();
         displaySearchBar();
-
 
         $this->displaySearch($data);
     }
@@ -57,7 +56,6 @@ class AdvertController extends Controller
      * It redirects to view that shows sully certain advert, with it's owner information etc
      */
     public function showSingleAdvert($advertId){
-        #TODO add error handling in case of undefined id specified
         helper('display_website_element');
         displayNavBar();
         $user = new UserModel();
@@ -65,13 +63,16 @@ class AdvertController extends Controller
         $picture=new PictureModel();
 
         $advertRow=$advert->getAdvertById($advertId);
-        $userRow=$user->getUserById($advertRow['owner_id']);
+        if(! empty($advertRow)) {
+            $userRow = $user->getUserById($advertRow['owner_id']);
 
-        $data=['row'=>$advertRow,
-                'picture'=>$picture->getPictureByAdvertId($advertId),
-                'user'=>$userRow];
-        //echo view("adverts/singleAdvertView",$data);
-        echo view("adverts/fullSingleAdvertView",$data);
+            $data = ['row' => $advertRow,
+                'picture' => $picture->getPictureByAdvertId($advertId),
+                'user' => $userRow];
+
+            echo view("adverts/fullSingleAdvertView",$data);
+        }else
+            return redirect()->to(base_url('/adverts'));
     }
 
     public function add()
@@ -132,7 +133,6 @@ class AdvertController extends Controller
                 $picture=new PictureModel();
 
                 $file=$this->request->getFile('picture');
-                var_dump($file->getPath());
                 $name=$this->request->getFile('picture')->getRandomName();
                 //$name=$this->request->getFile('picture')->getFilename();
 
@@ -146,12 +146,8 @@ class AdvertController extends Controller
                 //$this->request->getFile('picture')->move('images/',$name);
 
                 #TODO add redirect to page of newly added advert
-                d("added file with name");
-                d($name);
-                d($this->request->getPost('isPromoted'));
                 return redirect()->to(base_url("/adverts/".$advertId));
             }else{
-                d($this->validator->getErrors());
                 displayValidatorErrors($this->validator->getErrors());
             }
         }else{
@@ -183,7 +179,7 @@ class AdvertController extends Controller
 
             $this->search($data);
         }else{
-            d($this->validator->getErrors());
+            //d($this->validator->getErrors());
             displayValidatorErrors($this->validator->getErrors());
         }
     }
@@ -193,11 +189,8 @@ class AdvertController extends Controller
         $picture=new PictureModel();
         $categoryModel = new CategoryModel();
 
-
         $categoryId=$categoryModel->getCategoryIdByName($category);
-
         $data=['rows'=>$model->getAdvertsByCategoryId($categoryId),'picture'=>$picture->getAll()];
-
         $this->search($data);
     }
 

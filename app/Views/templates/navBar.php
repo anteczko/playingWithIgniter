@@ -9,13 +9,12 @@ echo view('templates/BannerView');?>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="\adverts">Home</a>
                 <a class="nav-link" href="/adverts">Search</a>
 
             </div>
             <!-- #TODO add some php that will switch between next dwo divs -->
             <div class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <div class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Test Modal</div>
 
             <?php
                 helper('displayWebsiteElement');
@@ -42,14 +41,15 @@ $session = \Config\Services::session();
 $errors=$session->getFlashdata('errors');
 $errorMessage=$session->getFlashdata('errorMessage');
 
-d($errors);
-d($errorMessage);
+//d($errors);
+//d($errorMessage);
 ?>
 <div class="modal fade" id="loginModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <?php
-                displayError($errorMessage);
+                if(!empty($errorMessage))
+                    displayError($errorMessage);
                 echo view('forms/loginUserView');
             ?>
         </div>
@@ -59,10 +59,11 @@ d($errorMessage);
     <div class="modal-dialog">
         <div class="modal-content">
             <?php
-                echo view('forms/registerUserView');
                 #TODO finish
-                //displayValidatorErrors($errors);
-                d($errors);
+                if(! empty($errors))
+                    displayValidatorErrors($errors);
+                echo view('forms/registerUserView');
+                //d($errors);
             ?>
         </div>
     </div>

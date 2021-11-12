@@ -47,16 +47,10 @@ class UserController extends Controller
                 'email' => filter_var($this->request->getPost('email'), FILTER_SANITIZE_EMAIL),
                 'phone_number' => $this->request->getPost('phoneNumber'),
             ]);
-            #TODO add success redirect
-            //d("User registered secussfully!!!!");
-            //d($model->getUserData());
             $id=$model->db->insertID();
             $this->setSession($id,esc($this->request->getPost('username')));
             return redirect()->to(base_url("/adverts"));
         } else {
-            #TODO add error of nusuccessfull login
-            //d("error!");
-            //d($this->validator->getErrors());
             $session = \Config\Services::session();
             $session->setFlashdata('errors',$this->validator->getErrors());
             return redirect()->to(base_url("/adverts"));
@@ -67,7 +61,6 @@ class UserController extends Controller
     {
         helper('display_website_element');
         displayNavBar();
-        //TODO add a code to log in
         echo view('forms/loginUserView');
     }
 
@@ -82,7 +75,7 @@ class UserController extends Controller
         $model = new UserModel();
 
         $errorMessage="";
-        if ($this->request->getMethod() === 'post') {
+        if ($this->request->getMethod() == 'post'){
             $validation = \Config\Services::validation();
             $usernameOrEmail = filter_var($this->request->getPost('username'), FILTER_SANITIZE_EMAIL);
 
@@ -90,13 +83,10 @@ class UserController extends Controller
                 $user = $model->getUserByEmailOrUsername($usernameOrEmail);
                 if (!empty($user)) {
                     if (password_verify($this->request->getPost('password'), $user->password)) {
-                        //d("login successfull");
                         $this->setSession($user->id,$user->username);
-                        #TODO add redirect
                         helper('url');
                         return redirect()->to(base_url('/adverts'));
                     } else {
-                        //displayError("Password specified is not correct");
                         $errorMessage="Password specified is not correct";
                     }
                 }else{
@@ -105,12 +95,11 @@ class UserController extends Controller
             } else {
                 $errorMessage="User by that username nor email doesn't exist";
             }
-
-            if(! empty($errorMessage)){
-                $session = \Config\Services::session();
-                $session->setFlashdata('errorMessage',$errorMessage);
-                return redirect()->to(base_url("/adverts"));
-            }
+        }
+        if(! empty($errorMessage)){
+            $session = \Config\Services::session();
+            $session->setFlashdata('errorMessage',$errorMessage);
+            return redirect()->to(base_url("/adverts"));
         }
     }
     public function logout(){
